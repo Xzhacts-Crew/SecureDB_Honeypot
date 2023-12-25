@@ -276,7 +276,7 @@ your preferred browser.
 127.0.0.1:8000
 ```
 
-## Honeypot
+### Honeypot
 
 Download Suricata
 ```sh
