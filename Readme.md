@@ -6,17 +6,17 @@
 | Indra Bagas Pratama (1stind)   | 22.83.0859  | System Security Administrator |
 | Tri Kustiyani (chocojace) | 23.83.0859  | Build Service Database |
 | Deny Ardiansyah (ardiansyahpotter) | 23.83.0909  | Build Service SSH SFTP |
-| M. Aidhil Fitrah (AshXyzz) | 23.83.0841 | Secure & Build Honeypot |
+| M. Aidhil Fitrah | 23.83.0841 | Secure & Build Honeypot |
 | M. Akbar Baihaqqy | 23.83.0866  | Secure & Build Honeypot |
-| Fatihul Faqih H. | 23.83.0848  | Secure Honeypot |
+| Fatihul Faqih H. | 23.83.0848  | Secure & Build Honeypot |
 
 ## Deskripsi
 - Secure Database server Mysql PhpMyadmin
 - Secure File Transfer Protocol OpenSSH
 - Secure Shell with Honeypot
 - Pembatasan Hak akses akses file dan folder dan Autentifikasi login
-- Secure Port with Firewall UFW, PortKnocking, 
-- Konfigutasi ip table untuk menghindariserangan DDOS dengan rule Iptables
+- Secure Port with Firewall UFW, PortKnocking.
+- Konfigurasi ip tables untuk menghindariserangan DDOS dengan rule Iptables
 - Menonaktifkan listing folder dan menghapus versi dan port apache
 - Instalasi Fail2ban untuk memblok lalu lintas jaringan serangan brute-force dan serangan berbasis pola.
 - Instalasi Rkhunter untuk mengecek root backdoor yg ada pada sistem
@@ -28,14 +28,14 @@
 
 ## Skenario
 Kami memiliki 2 virtual mesin (VM), dengan sistem operasi ubuntu server
-1. VM1 (Superadmin) adalah virtual mesin yang memiliki service database server dan SFTP server
-2. VM2 (hnypt) adalah virtual mesin sebagai honeypots dari server utama yang diinstalasi IPS IDS untuk bisa mengamati log bila terjadi serangan
-3. Ketika VM1 diserang secara remote ssh port 22, VM1 akan dikonfigurasi dengan Iptables untuk membelokkan serangan ke VM2. Dan ketika serangan berhasil dialihkan makan penyerang hanya akan terjebak didalam VM2 dan segala log aktivitasnya akan tercatat pada file log  
+* VM1 (Superadmin) adalah virtual mesin yang memiliki service database server dan SFTP server
+* VM2 (hnypt) adalah virtual mesin sebagai honeypots dari server utama yang diinstalasi IPS IDS untuk bisa mengamati log bila terjadi serangan
+* Ketika VM1 diserang secara remote ssh port 22, VM1 akan dikonfigurasi dengan Iptables untuk membelokkan serangan ke VM2. Dan ketika serangan berhasil dialihkan makan penyerang hanya akan terjebak didalam VM2 dan segala log aktivitasnya akan tercatat pada file log  
 
 ## Topologi
 * VM1 IP Address 192.168.10.11/24
 * VM2 IP Address 192.168.10.12/24
-* VM1 dan VM2 terhubung secara lokal dan dikonfigurasi untuk loadbalancing Haproxy
+* VM1 dan VM2 terhubung secara lokal route ip tables dan dikonfigurasi untuk loadbalancing Haproxy
 
 ## Installation Service
 * Configure Apache
@@ -61,7 +61,7 @@ a2dismod --force autoindex
 ```sh
 Module autoindex already disabled
 ```
-Step 3: Menonaktifkan listing folder apache
+Step 4: Menonaktifkan listing folder apache
 ```sh
 /etc/apache2/conf-available/security.conf
 ```
@@ -73,7 +73,7 @@ Step 3: Menonaktifkan listing folder apache
 * foto1
 * foto2 
 
-Step 3: Mengubah sub folder default PhpMyadmin
+Step 5: Mengubah sub folder default PhpMyadmin
 ```sh
 nano /etc/apache2/conf-available/phpmyadmin.conf
 ```
@@ -97,8 +97,8 @@ systemctl restart apache2
 Step 1: Konfigurasi
 * Ubah port default
 * Disable root login
-* Batasi akses 
-* 
+* Batasi akses
+ 
 ```sh
 nano /etc/ssh/sshd_config
 ```
@@ -125,6 +125,11 @@ AllowUsers superftp@192.168.10.11 superadmin@192.168.56.5
 ```
 * Video gif aset2
 
+Step 1: Restart ssh
+```sh
+systemctl restart ssh
+```
+
 ## Konfigurasi Firewall UFW
 Step 1: Aktifkan UFW
 ```sh
@@ -133,7 +138,7 @@ enable ufw
 ```sh
 ufw status verbose
 ```
-Step 2: Deny port yang tidak digunakan
+Step 2: Konfigurasi rule UFW
 ```sh
 ufw default deny incoming
 ```
@@ -152,6 +157,7 @@ ufw allow from 192.168.10.0/24
 ```
 * hanya mengijinkan akses port dari ip yang terdaftar pada UFW
 
+## Konfigurasi Firewall IP Tables
 
 Step 4: Install Php
 ```sh
@@ -275,6 +281,33 @@ your preferred browser.
 ```sh
 127.0.0.1:8000
 ```
+
+## License
+
+**Free Software, Hell Yeah!**
+
+[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
+
+   [dill]: <https://github.com/joemccann/dillinger>
+   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
+   [john gruber]: <http://daringfireball.net>
+   [df1]: <http://daringfireball.net/projects/markdown/>
+   [markdown-it]: <https://github.com/markdown-it/markdown-it>
+   [Ace Editor]: <http://ace.ajax.org>
+   [node.js]: <http://nodejs.org>
+   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
+   [jQuery]: <http://jquery.com>
+   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
+   [express]: <http://expressjs.com>
+   [AngularJS]: <http://angularjs.org>
+   [Gulp]: <http://gulpjs.com>
+
+   [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
+   [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
+   [PlGd]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
+   [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
+   [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
+   [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
 
 ### Honeypot
 
