@@ -4,7 +4,7 @@
 | Nama  | Nim | Role |
 | ----- | --- | ---- |
 | Indra Bagas Pratama (1stind)   | 22.83.0859  | System Security Administrator |
-| Tri Kustiyani (chocojace) | 23.83.0859  | Build Service Database |
+| Tri Kustiyani (chocojace) | 23.83.0860  | Build Service Database |
 | Deny Ardiansyah (ardiansyahpotter) | 23.83.0909  | Build Service SSH SFTP |
 | M. Aidhil Fitrah | 23.83.0841 | Secure & Build Honeypot |
 | M. Akbar Baihaqqy | 23.83.0866  | Secure & Build Honeypot |
