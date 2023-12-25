@@ -276,11 +276,67 @@ your preferred browser.
 127.0.0.1:8000
 ```
 
-## License
+## Honeypot
 
-**Free Software, Hell Yeah!**
+Download Suricata
+```sh
+wget https://www.openinfosecfoundation.org/download/suricata-6.0.8.tar.gz
+```
 
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
+Extract file
+```sh
+tar xzf suricata-6.0.8.tar.gz
+```
+
+Ke directory dan configure
+```sh
+cd suricata-6.0.8
+./configure --enable-nfqueue --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+```
+
+Install suricata
+```sh
+make
+make install-full
+```
+
+Konfigurasi suricata
+```sh
+nano /etc/suricata/suricata.yaml
+```
+
+Verify file konfigurasi
+```sh
+suricata -T -c /etc/suricata/suricata.yaml -v
+```
+
+Jalankan suricata secara manual
+```sh
+suricata -D -c /etc/suricata/suricata.yaml -i eth0
+```
+
+Selanjutnya, kembali ke server Suricata dan periksa file log Suricata
+```sh
+tail -f /var/log/suricata/fast.log
+```
+
+Contoh Output nya akan seperti ini:
+```sh
+10/18/2022-14:01:38.569298  [**] [1:2210008:2] SURICATA STREAM 3way handshake SYN resend different seq on SYN recv [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 157.32.37.21:59188 -> 209.23.10.188:80
+10/18/2022-14:01:38.569304  [**] [1:2210004:2] SURICATA STREAM 3way handshake SYNACK resend with different ack [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 209.23.10.188:80 -> 157.32.37.21:59188
+10/18/2022-14:01:38.569649  [**] [1:2210008:2] SURICATA STREAM 3way handshake SYN resend different seq on SYN recv [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 157.32.37.21:53343 -> 209.23.10.188:80
+10/18/2022-14:01:38.569655  [**] [1:2210004:2] SURICATA STREAM 3way handshake SYNACK resend with different ack [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 209.23.10.188:80 -> 157.32.37.21:53343
+10/18/2022-14:01:38.570762  [**] [1:2210008:2] SURICATA STREAM 3way handshake SYN resend different seq on SYN recv [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 157.32.37.21:62070 -> 209.23.10.188:80
+10/18/2022-14:01:38.570770  [**] [1:2210004:2] SURICATA STREAM 3way handshake SYNACK resend with different ack [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 209.23.10.188:80 -> 157.32.37.21:62070
+10/18/2022-14:01:38.571748  [**] [1:2210008:2] SURICATA STREAM 3way handshake SYN resend different seq on SYN recv [**] [Classification: Generic Protocol Command Decode] [Priority: 3] {TCP} 157.32.37.21:5001 -> 209.23.10.188:80
+```
+>Note : Contoh tersebut jika ada yang menyerang menggunakan DDoS
+
+**Sekian Terima Kasih**
+
+
+
+
 
    [dill]: <https://github.com/joemccann/dillinger>
    [git-repo-url]: <https://github.com/joemccann/dillinger.git>
